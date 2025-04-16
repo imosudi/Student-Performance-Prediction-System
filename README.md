@@ -8,7 +8,7 @@ The Student Performance Prediction System is an expert system that uses fuzzy lo
 ## Team Members
 
 - Izuafa Abdulrafiu Braimah (VUG/SEN/22/7708) - Data Modeling & Testing
-- Anigbogu Olivia (VUG/SEN/22/7174) - User Interface Design (HTML/CSS)
+- Anigbogu Olivia (VUG/SEN/22/7074) - User Interface Design (HTML/CSS)
 - Simun Nungwa (VUG/SEN/22/7426) - Flask Application Development
 
 ## Dataset Source
