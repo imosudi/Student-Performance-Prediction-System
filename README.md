@@ -4,6 +4,7 @@
 
 The Student Performance Prediction System is an expert system that uses fuzzy logic and regression techniques to predict student academic outcomes based on demographic factors and study habits. The system takes various student metrics as input, processes them through a combination of fuzzy logic membership functions and regression models, and provides predictions along with personalized advice for academic improvement.
 
+## Group 3
 ## Team Members
 
 - Izuafa Abdulrafiu Braimah (VUG/SEN/22/7708) - Data Modeling & Testing
