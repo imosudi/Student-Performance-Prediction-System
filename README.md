@@ -45,7 +45,7 @@ This project uses the Student Performance Dataset from Kaggle, which contains in
 
 2. Create and activate a virtual environment:
    ```
-   python -m venv venv
+   python3 -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
 
@@ -56,7 +56,7 @@ This project uses the Student Performance Dataset from Kaggle, which contains in
 
 4. Run the Flask application:
    ```
-   python app.py
+   python3 app.py
    ```
 
 5. Open a web browser and navigate to:
