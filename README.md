@@ -104,6 +104,9 @@ We conducted extensive testing of our system, with both the fuzzy logic componen
 We tested various student profiles with different attendance and study time inputs. For example:
 
 **Test Case 5:**
+
+![Testcase of model](notebooks/Testing/modelperformance.png)
+
 Student with attendance=60%, study_time=15h/week:
 - Calculated effort level: 50.00/100
 - Actual vs Predicted Scores:
