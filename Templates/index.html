@@ -1,0 +1,335 @@
+{% extends "layout.html" %}
+
+{% block title %}Student Performance Prediction System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="jumbotron">
+            <h1 class="display-4">Student Performance Prediction</h1>
+            <p class="lead">This system uses fuzzy logic and regression models to predict academic performance based on various factors.</p>
+            <hr class="my-4">
+            <p>Enter student information and see personalized performance predictions.</p>
+        </div>
+    </div>
+</div>
+
+<form method="POST" action="/">
+    <!-- Student Information Section -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h4><i class="fas fa-user-graduate mr-2"></i>Student Information</h4>
+        </div>
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="gender">Gender</label>
+                    <select class="form-control" id="gender" name="gender" required>
+                        <option value="female">Female</option>
+                        <option value="male">Male</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group col-md-4">
+                    <label for="race_ethnicity">Race/Ethnicity</label>
+                    <select class="form-control" id="race_ethnicity" name="race_ethnicity" required>
+                        <option value="group A">Group A</option>
+                        <option value="group B">Group B</option>
+                        <option value="group C">Group C</option>
+                        <option value="group D">Group D</option>
+                        <option value="group E">Group E</option>
+                    </select>
+                </div>
+                
+                <div class="form-group col-md-4">
+                    <label for="parental_education">Parental Education</label>
+                    <select class="form-control" id="parental_education" name="parental_education" required>
+                        <option value="some high school">Some high school</option>
+                        <option value="high school">High school</option>
+                        <option value="some college">Some college</option>
+                        <option value="associate's degree">Associate's degree</option>
+                        <option value="bachelor's degree">Bachelor's degree</option>
+                        <option value="master's degree">Master's degree</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="lunch">Lunch Type</label>
+                    <select class="form-control" id="lunch" name="lunch" required>
+                        <option value="standard">Standard</option>
+                        <option value="free/reduced">Free/Reduced</option>
+                    </select>
+                </div>
+                
+                <div class="form-group col-md-6">
+                    <label for="test_preparation">Test Preparation Course</label>
+                    <select class="form-control" id="test_preparation" name="test_preparation" required>
+                        <option value="completed">Completed</option>
+                        <option value="none">None</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Current Academic Metrics -->
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h4><i class="fas fa-chart-line mr-2"></i>Current Academic Metrics</h4>
+        </div>
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="math_score">Current Math Score</label>
+                    <input type="number" class="form-control" id="math_score" name="math_score" min="0" max="100" value="0">
+                    <small class="form-text text-muted">Enter 0 if unknown</small>
+                </div>
+                
+                <div class="form-group col-md-4">
+                    <label for="reading_score">Current Reading Score</label>
+                    <input type="number" class="form-control" id="reading_score" name="reading_score" min="0" max="100" value="0">
+                    <small class="form-text text-muted">Enter 0 if unknown</small>
+                </div>
+                
+                <div class="form-group col-md-4">
+                    <label for="writing_score">Current Writing Score</label>
+                    <input type="number" class="form-control" id="writing_score" name="writing_score" min="0" max="100" value="0">
+                    <small class="form-text text-muted">Enter 0 if unknown</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Fuzzy Logic Inputs -->
+    <div class="card mb-4">
+        <div class="card-header bg-warning">
+            <h4><i class="fas fa-sliders-h mr-2"></i>Student Effort & Engagement</h4>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="attendance">Attendance Rate</label>
+                <div class="d-flex align-items-center">
+                    <input type="range" class="form-control-range flex-grow-1" id="attendance" name="attendance" min="0" max="100" value="75">
+                    <span id="attendance_value" class="slider-value">75%</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="study_time">Study Hours per Week</label>
+                <div class="d-flex align-items-center">
+                    <input type="range" class="form-control-range flex-grow-1" id="study_time" name="study_time" min="0" max="40" value="15">
+                    <span id="study_time_value" class="slider-value">15h</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="motivation">Motivation Level</label>
+                <div class="d-flex align-items-center">
+                    <input type="range" class="form-control-range flex-grow-1" id="motivation" name="motivation" min="0" max="100" value="50">
+                    <span id="motivation_value" class="slider-value">50%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary btn-lg btn-block mb-4">
+        <i class="fas fa-calculator mr-2"></i>Predict Performance
+    </button>
+</form>
+
+{% if prediction %}
+<!-- Results Display Area -->
+<div class="card mb-4">
+    <div class="card-header bg-info text-white">
+        <h3><i class="fas fa-chart-bar mr-2"></i>Prediction Results</h3>
+    </div>
+    <div class="card-body">
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card prediction-card">
+                    <div class="card-header text-center bg-primary text-white">
+                        <h5><i class="fas fa-square-root-alt mr-2"></i>Math Score</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <h2>{{ prediction.math_score|round(1) }}</h2>
+                        {% if prediction.math_improvement is defined %}
+                        <p class="
+                            {% if prediction.math_improvement > 0 %}text-success{% 
+                            elif prediction.math_improvement < 0 %}text-danger{% 
+                            else %}text-secondary{% endif %}">
+                            <i class="fas {% if prediction.math_improvement > 0 %}fa-arrow-up{% 
+                                      elif prediction.math_improvement < 0 %}fa-arrow-down{% 
+                                      else %}fa-arrows-alt-h{% endif %} mr-1"></i>
+                            {{ prediction.math_improvement|round(1) }} points
+                        </p>
+                        {% endif %}
+                        <div class="progress mt-2">
+                            <div class="progress-bar bg-primary" role="progressbar" 
+                                 style="width: {{ prediction.math_score }}%" 
+                                 aria-valuenow="{{ prediction.math_score }}" 
+                                 aria-valuemin="0" aria-valuemax="100">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card prediction-card">
+                    <div class="card-header text-center bg-success text-white">
+                        <h5><i class="fas fa-book mr-2"></i>Reading Score</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <h2>{{ prediction.reading_score|round(1) }}</h2>
+                        {% if prediction.reading_improvement is defined %}
+                        <p class="
+                            {% if prediction.reading_improvement > 0 %}text-success{% 
+                            elif prediction.reading_improvement < 0 %}text-danger{% 
+                            else %}text-secondary{% endif %}">
+                            <i class="fas {% if prediction.reading_improvement > 0 %}fa-arrow-up{% 
+                                      elif prediction.reading_improvement < 0 %}fa-arrow-down{% 
+                                      else %}fa-arrows-alt-h{% endif %} mr-1"></i>
+                            {{ prediction.reading_improvement|round(1) }} points
+                        </p>
+                        {% endif %}
+                        <div class="progress mt-2">
+                            <div class="progress-bar bg-success" role="progressbar" 
+                                 style="width: {{ prediction.reading_score }}%" 
+                                 aria-valuenow="{{ prediction.reading_score }}" 
+                                 aria-valuemin="0" aria-valuemax="100">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card prediction-card">
+                    <div class="card-header text-center bg-danger text-white">
+                        <h5><i class="fas fa-pencil-alt mr-2"></i>Writing Score</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <h2>{{ prediction.writing_score|round(1) }}</h2>
+                        {% if prediction.writing_improvement is defined %}
+                        <p class="
+                            {% if prediction.writing_improvement > 0 %}text-success{% 
+                            elif prediction.writing_improvement < 0 %}text-danger{% 
+                            else %}text-secondary{% endif %}">
+                            <i class="fas {% if prediction.writing_improvement > 0 %}fa-arrow-up{% 
+                                      elif prediction.writing_improvement < 0 %}fa-arrow-down{% 
+                                      else %}fa-arrows-alt-h{% endif %} mr-1"></i>
+                            {{ prediction.writing_improvement|round(1) }} points
+                        </p>
+                        {% endif %}
+                        <div class="progress mt-2">
+                            <div class="progress-bar bg-danger" role="progressbar" 
+                                 style="width: {{ prediction.writing_score }}%" 
+                                 aria-valuenow="{{ prediction.writing_score }}" 
+                                 aria-valuemin="0" aria-valuemax="100">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card prediction-card">
+                    <div class="card-header text-center bg-dark text-white">
+                        <h5><i class="fas fa-calculator mr-2"></i>Average Score</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <h2>{{ prediction.average_score|round(1) }}</h2>
+                        {% if prediction.average_improvement is defined %}
+                        <p class="
+                            {% if prediction.average_improvement > 0 %}text-success{% 
+                            elif prediction.average_improvement < 0 %}text-danger{% 
+                            else %}text-secondary{% endif %}">
+                            <i class="fas {% if prediction.average_improvement > 0 %}fa-arrow-up{% 
+                                        elif prediction.average_improvement < 0 %}fa-arrow-down{% 
+                                        else %}fa-arrows-alt-h{% endif %} mr-1"></i>
+                            {{ prediction.average_improvement|round(1) }} points
+                        </p>
+                        {% endif %}
+                        <div class="progress mt-2">
+                            <div class="progress-bar bg-dark" role="progressbar" 
+                                 style="width: {{ prediction.average_score }}%" 
+                                 aria-valuenow="{{ prediction.average_score }}" 
+                                 aria-valuemin="0" aria-valuemax="100">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card prediction-card">
+                    <div class="card-header text-center bg-warning">
+                        <h5><i class="fas fa-battery-three-quarters mr-2"></i>Effort Level</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <h2>{{ prediction.effort_level|round(1) }}%</h2>
+                        <div class="progress mt-3">
+                            <div class="progress-bar bg-warning" role="progressbar" 
+                                 style="width: {{ prediction.effort_level }}%" 
+                                 aria-valuenow="{{ prediction.effort_level }}" 
+                                 aria-valuemin="0" aria-valuemax="100">
+                            </div>
+                        </div>
+                        <div class="mt-2 text-muted small">
+                            {% if prediction.effort_level < 30 %}
+                                <span class="text-danger">Low effort level</span>
+                            {% elif prediction.effort_level < 70 %}
+                                <span class="text-warning">Moderate effort level</span>
+                            {% else %}
+                                <span class="text-success">High effort level</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5><i class="fas fa-lightbulb mr-2"></i>Personalized Recommendations</h5>
+            </div>
+            <div class="card-body">
+                {% if prediction.recommendations %}
+                <ul class="list-group">
+                    {% for rec in prediction.recommendations %}
+                    <li class="list-group-item">
+                        <i class="fas fa-check-circle text-success mr-2"></i>{{ rec }}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-center text-muted">No specific recommendations available.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Update slider values in real-time
+    document.getElementById('attendance').addEventListener('input', function() {
+        document.getElementById('attendance_value').textContent = this.value + '%';
+    });
+    
+    document.getElementById('study_time').addEventListener('input', function() {
+        document.getElementById('study_time_value').textContent = this.value + 'h';
+    });
+    
+    document.getElementById('motivation').addEventListener('input', function() {
+        document.getElementById('motivation_value').textContent = this.value + '%';
+    });
+</script>
+{% endblock %}
