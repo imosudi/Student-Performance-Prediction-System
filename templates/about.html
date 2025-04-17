@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block title %}About - Student Performance Prediction System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h2><i class="fas fa-info-circle mr-2"></i>About the System</h2>
+            </div>
+            <div class="card-body">
+                <h4>Student Performance Prediction System</h4>
+                <p>This system uses a combination of fuzzy logic and regression techniques to predict student academic performance based on various factors.</p>
+                
+                <h5 class="mt-4">Key Features</h5>
+                <ul>
+                    <li>Predicts math, reading, and writing scores based on demographic factors</li>
+                    <li>Uses fuzzy logic to model subjective factors like effort and motivation</li>
+                    <li>Provides personalized recommendations based on predicted outcomes</li>
+                    <li>Shows potential improvement compared to current scores</li>
+                </ul>
+                
+                <h5 class="mt-4">How It Works</h5>
+                <p>The system uses two main components:</p>
+                
+                <div class="card mb-3">
+                    <div class="card-header bg-success text-white">
+                        <h6>Regression Model</h6>
+                    </div>
+                    <div class="card-body">
+                        <p>The regression component predicts scores based on:</p>
+                        <ul>
+                            <li>Gender</li>
+                            <li>Race/Ethnicity</li>
+                            <li>Parental Education Level</li>
+                            <li>Lunch Type (socioeconomic indicator)</li>
+                            <li>Test Preparation Course Completion</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header bg-warning">
+                        <h6>Fuzzy Logic Component</h6>
+                    </div>
+                    <div class="card-body">
+                        <p>The fuzzy logic component models subjective factors:</p>
+                        <ul>
+                            <li>Attendance Rate</li>
+                            <li>Study Hours Per Week</li>
+                            <li>Motivation Level</li>
+                        </ul>
+                        <p>These factors are used to adjust the base predictions from the regression model.</p>
+                    </div>
+                </div>
+                
+                <h5 class="mt-4">Dataset</h5>
+                <p>This system was trained using datasets from:</p>
+                <ul>
+                    <li><a href="https://archive.ics.uci.edu/ml/datasets/Student+Performance" target="_blank">UCI ML Repository - Student Performance Dataset</a></li>
+                    <li><a href="https://www.kaggle.com/datasets/spscientist/students-performance-in-exams" target="_blank">Kaggle - Students Performance in Exams</a></li>
+                </ul>
+                
+                <h5 class="mt-4">Team</h5>
+                <p>This project was developed by:</p>
+                <ul>
+                    <li><strong>Ramsey</strong> - Model Development and Dataset Processing</li>
+                    <li><strong>Olivia</strong> - HTML Template UI</li>
+                    <li><strong>Simon</strong> - Flask Backend</li>
+                </ul>
+                
+                <div class="alert alert-info mt-4">
+                    <p><strong>Note:</strong> This is an educational project. Predictions should be used as general guidance only and not as a definitive assessment of academic potential.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
